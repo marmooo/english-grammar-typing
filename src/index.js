@@ -13,7 +13,7 @@ const gameTime = 120;
 const tmpCanvas = document.createElement("canvas");
 const mode = document.getElementById("mode");
 let typeTimer;
-// https://dova-s.jp/bgm/play1735.html
+// https://dova-s.jp/bgm/play16121.html
 const bgm = new Audio("mp3/bgm.mp3");
 bgm.volume = 0.1;
 bgm.loop = true;
