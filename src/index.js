@@ -267,19 +267,17 @@ function loopVoice(text, n) {
 
 function loadProblems() {
   const course = courseOption.radio.value;
-  fetch("data/" + course + ".tsv").then(
-    function (response) {
-      return response.text();
-    },
-  ).then(function (tsv) {
-    problems = tsv.trim().split("\n").map((line) => {
-      const [en, jaStr] = line.split("\t");
-      const ja = jaStr.split("|").slice(0, 3).join("\n");
-      return { en: en, ja: ja };
+  fetch("data/" + course + ".tsv")
+    .then((response) => response.text())
+    .then((tsv) => {
+      problems = tsv.trim().split("\n").map((line) => {
+        const [en, jaStr] = line.split("\t");
+        const ja = jaStr.split("|").slice(0, 3).join("\n");
+        return { en: en, ja: ja };
+      });
+    }).catch(function (err) {
+      console.error(err);
     });
-  }).catch(function (err) {
-    console.error(err);
-  });
 }
 
 function typeNormal(currNode) {
@@ -369,7 +367,7 @@ function patchEvent(event) {
 function typeEvent(event) {
   const key = patchEvent(event);
   if (key == " " || key == "Spacebar") {
-    event.preventDefault();  // ScrollLock
+    event.preventDefault(); // ScrollLock
   }
   typeEventKey(key);
 }
