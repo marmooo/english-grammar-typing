@@ -670,9 +670,9 @@ function scoring() {
   document.getElementById("typeSpeed").textContent = typeSpeed;
   document.getElementById("errorType").textContent = errorCount;
   document.getElementById("twitter").href =
-    "https://twitter.com/intent/tweet?text=英文タイピングの" + course +
+    "https://twitter.com/intent/tweet?text=英文法タイピングの" + course +
     "をプレイしたよ! (速度: " + typeSpeed + "回/秒) " +
-    "&url=https%3a%2f%2fmarmooo.github.com/hageda%2f&hashtags=英文タイピング";
+    "&url=https%3a%2f%2fmarmooo.github.com/english-grammar-typing/%2f&hashtags=英文法タイピング";
   document.addEventListener("keydown", startKeyEvent);
 }
 
