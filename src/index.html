@@ -48,7 +48,6 @@
           url('https://marmooo.github.io/fonts/textar-light.woff2') format('woff2');
         font-display: swap;
       }
-      html,body { height:100%; }
       pre.aa {
         font-size: 1rem;
         display: inline-block;
@@ -67,14 +66,15 @@
         overflow:hidden;
       }
       #aa { position:relative; top:0; left:0; margin:auto; }
-      .hg-theme-default .hg-button { height:40px; font-size:2rem; }
+      #gamePanel {  height:calc(100vh - 60px); }
       #typePanel { font-variant-ligatures:none; word-wrap: break-word; }
       #keyboard { touch-action:manipulation; }
       .hg-theme-default .hg-button.hg-standardBtn[data-skbtn="🌏"] { max-width:80px; }
+      .hg-theme-default .hg-button { height:40px; font-size:2rem; }
       html[data-theme="dark"] { filter: invert(1) hue-rotate(180deg); }
       @-moz-document url-prefix() { html[data-theme="dark"] { background-color:black; } }
     </style>
-    <!-- <script data-ad-client="ca-pub-6459713332128733" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script> -->
+    <script data-ad-client="ca-pub-6459713332128733" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
   </head>
   <body>
     <header>
@@ -109,115 +109,134 @@
         <pre><code>sudo apt install speech-dispatcher
 sudo apt install festival speech-dispatcher-festival</code></pre>
       </div>
-      <div id="infoPanel">
-        <div class="row text-center">
-          <div class="col-sm text-start pb-3">
-            <p>英文法とタイピングを同時に学ぶアプリです。</p>
-            <h6>キーバインド</h6>
-            <table class="table table-sm table-striped">
-              <tr><td><kbd>無変換</kbd></td><td>ローマ字表示</td></tr>
-              <tr><td><kbd>変換</kbd></td><td>音声読み上げ</td></tr>
-            </table>
-          </div>
-          <div id="timePanel" class="col-sm">
-            <div class="alert alert-info">
-              <div class="row flex-wrap">
-                <div class="col p-1 h5 text-nowrap">
-                  <label><ruby>時間<rp>(</rp><rt>じかん</rt><rp>)</rp></ruby>:</label>
-                  <span id="time" class="ms-1">120秒 / 120秒</span>
-                </div>
-                <div class="col p-1 m-auto">
-                  <button class="btn btn-secondary btn-sm"
-                    data-bs-toggle="collapse" data-bs-target="#courseOption"
-                    aria-expanded="false" aria-controls="courseOption">コース
-                  </button>
-                  <button id="mode" class="ms-1 btn btn-secondary btn-sm">EASY</button>
-                  <div class="form-check form-check-inline form-switch text-nowrap ms-1 py-1">
-                    <input class="form-check-input" type="checkbox" id="guideSwitch">
-                    <label class="form-check-label" for="guideSwitch">ガイド</label>
+      <div id="gamePanel" class="d-flex flex-column">
+        <div id="infoPanel">
+          <div class="row text-center">
+            <div class="col-sm text-start pb-3">
+              <p>英文法とタイピングを同時に学ぶアプリです。</p>
+              <h6>キーバインド</h6>
+              <table class="table table-sm table-striped">
+                <tr><td><kbd>無変換</kbd></td><td>ローマ字表示</td></tr>
+                <tr><td><kbd>変換</kbd></td><td>音声読み上げ</td></tr>
+              </table>
+            </div>
+            <div id="timePanel" class="col-sm">
+              <div class="alert alert-info">
+                <div class="row flex-wrap">
+                  <div class="col p-1 h5 text-nowrap">
+                    <label><ruby>時間<rp>(</rp><rt>じかん</rt><rp>)</rp></ruby>:</label>
+                    <span id="time" class="ms-1">120秒 / 120秒</span>
+                  </div>
+                  <div class="col p-1 m-auto">
+                    <button class="btn btn-secondary btn-sm"
+                      data-bs-toggle="collapse" data-bs-target="#courseOption"
+                      aria-expanded="false" aria-controls="courseOption">コース
+                    </button>
+                    <button id="mode" class="ms-1 btn btn-secondary btn-sm">EASY</button>
+                    <div class="form-check form-check-inline form-switch text-nowrap ms-1 py-1">
+                      <input class="form-check-input" type="checkbox" id="guideSwitch">
+                      <label class="form-check-label" for="guideSwitch">ガイド</label>
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div>
-                <button id="startButton" class="btn btm-sm btn-primary">SPACE: スタート / ESC: リセット</button>
+                <div>
+                  <button id="startButton" class="btn btm-sm btn-primary">SPACE: スタート / ESC: リセット</button>
+                </div>
               </div>
             </div>
           </div>
+          <form id="courseOption" class="mb-3 p-2 text-center border rounded collapse">
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="I-am" checked>I am
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="You-are">You are
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="It-is">This/That/It is
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="He-is">He/She is
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="まとめ1-1">まとめ1-1
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="疑問文">疑問文
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="What-is">What is?
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="形容詞">形容詞
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="動詞">動詞
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="まとめ1-2">まとめ1-2
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="複数形">複数形
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="3人称単数">3人称単数
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="代名詞">代名詞
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="5W1H">5W1H
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="まとめ1-3">まとめ1-3
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="現在進行形">現在進行形
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="過去形-規則動詞">過去形(規則動詞)
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="過去形-不規則動詞">過去形(不規規則動詞)
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="can">can
+            </label>
+            <label class="form-check form-check-inline">
+              <input class="form-check-input" type="radio" name="radio" value="まとめ1-4">まとめ1-4
+            </label>
+          </form>
         </div>
-        <form id="courseOption" class="mb-3 p-2 text-center border rounded collapse">
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="I-am" checked>I am
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="You-are">You are
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="It-is">This/That/It is
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="He-is">He/She is
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="まとめ1-1">まとめ1-1
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="疑問文">疑問文
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="What-is">What is?
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="形容詞">形容詞
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="動詞">動詞
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="まとめ1-2">まとめ1-2
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="複数形">複数形
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="3人称単数">3人称単数
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="代名詞">代名詞
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="5W1H">5W1H
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="まとめ1-3">まとめ1-3
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="現在進行形">現在進行形
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="過去形-規則動詞">過去形(規則動詞)
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="過去形-不規則動詞">過去形(不規規則動詞)
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="can">can
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="まとめ1-4">まとめ1-4
-          </label>
-        </form>
-      </div>
-      <div class="text-center">
-        <div id="countPanel" class="d-none">
-          <div id="counter"></div>
-          <pre class="aa">
-
-　　彡 ⌒ ミ
-　　(´・ω・｀)
-　 ＿|　⊃／(＿＿_
-／　└-(＿＿＿_／
-￣￣￣￣￣￣￣
+        <div id="aaOuter" class="flex-grow-1">
+          <pre id="aa" class="aa">
+　　　　　　　　　　　　　　　　　人人人人人人人人人人人人人人人
+　　　　　　　彡⌒ ミ 　　　　＞　　　スペルがわからない時は？　　＜ 　　　　　　 彡⌒ ミ
+　　　　　　ヽ(´･ω･｀)ノ　　　￣^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^￣ 　　　　　ヽ(´･ω･｀)ノ
+　　　　　　　(＿＿＿) 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 (＿＿＿)
+　　　　　　　　　　　　　　　　　　　　　 三　(；´・ω）
+　　　　　　　　　　　　　　　　　　　　　三 ｰ（‐∪─→ 　　　　彡⌒ ミ　　ヒント機能があるぞ！
+　　彡⌒ ミ 　　　　　　　　　 三 ／￣￣￣ 》 ￣＼ 　　　　 ヽ(´･ω･｀)ノ
+　　ヽ(´･ω･｀)ノ　　　　　　三三 |　　　　　　Ｕ　・　| 　　　　 (＿＿＿) 　　　　　　　彡⌒ ミ
+　　(＿＿＿) 　　　　　　　 三 と|　　　 　　　　ι| |　　　　　　　　　 　　　　　　　ヽ(´･ω･｀)ノ
+　　　　　　　　　　　　　　　　三 /_∧∨￣￣/_∧Ｕ　　　　　　　　　 　　　　　　　　(＿＿＿)
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 彡⌒ ミ
+　　　　　　　　　 彡⌒ ミ 　　　　　　　　　　　　　　　　　　　　　　 ヽ(´･ω･｀)ノ
+　　　　　　　　　ヽ(´･ω･｀)ノ　　　　　　　　　　　　　　　　　　　　　 (＿＿＿)
+　　　　　　　　　 (＿＿＿) 　　　　　　　　　　　　 彡⌒ ミ
+　　　　　　　　　　　　　　　　　　　　　　　　　　　ヽ(´･ω･｀)ノ　　5秒減るけどな
+　　　　　　　　　　　　　　　　　　　　　　　　　　　 (＿＿＿)
           </pre>
+        </div>
+        <div id="playPanel">
+          <div id="typePanel">
+            <div class="alert alert-info mb-0 h2 text-center">
+              <div id="japanese">タイピングしよう！</div>
+              <div id="roma">Let's typing!</div>
+              <div id="hint" class="text-muted"></div>
+            </div>
+          </div>
+          <div id="keyboard" class="d-none simple-keyboard"></div>
         </div>
         <div id="scorePanel" class="text-center pb-3 d-none">
           <h3 class="pt-3">タイピング結果</h3>
@@ -238,36 +257,17 @@ sudo apt install festival speech-dispatcher-festival</code></pre>
           </table>
           <a id="twitter" target="_blank" href="https://twitter.com/intent/tweet?text=英文法タイピングで遊んだよ!&url=https%3a%2f%2fmarmooo.github.com/english-grammar-typing%2f&hashtags=英文法タイピング" class="btn btn-primary" role="button">Twitter でつぶやく</a>
         </div>
-        <div id="playPanel">
-          <div id="aaOuter">
-            <pre id="aa" class="aa">
-　　　　　　　　　　　　　　　　　人人人人人人人人人人人人人人人
-　　　　　　　彡⌒ ミ 　　　　＞　　　スペルがわからない時は？　　＜ 　　　　　　 彡⌒ ミ
-　　　　　　ヽ(´･ω･｀)ノ　　　￣^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^￣ 　　　　　ヽ(´･ω･｀)ノ
-　　　　　　　(＿＿＿) 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 (＿＿＿)
-　　　　　　　　　　　　　　　　　　　　　 三　(；´・ω）
-　　　　　　　　　　　　　　　　　　　　　三 ｰ（‐∪─→ 　　　　彡⌒ ミ　　ヒント機能があるぞ！
-　　彡⌒ ミ 　　　　　　　　　 三 ／￣￣￣ 》 ￣＼ 　　　　 ヽ(´･ω･｀)ノ
-　　ヽ(´･ω･｀)ノ　　　　　　三三 |　　　　　　Ｕ　・　| 　　　　 (＿＿＿) 　　　　　　　彡⌒ ミ
-　　(＿＿＿) 　　　　　　　 三 と|　　　 　　　　ι| |　　　　　　　　　 　　　　　　　ヽ(´･ω･｀)ノ
-　　　　　　　　　　　　　　　　三 /_∧∨￣￣/_∧Ｕ　　　　　　　　　 　　　　　　　　(＿＿＿)
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 彡⌒ ミ
-　　　　　　　　　 彡⌒ ミ 　　　　　　　　　　　　　　　　　　　　　　 ヽ(´･ω･｀)ノ
-　　　　　　　　　ヽ(´･ω･｀)ノ　　　　　　　　　　　　　　　　　　　　　 (＿＿＿)
-　　　　　　　　　 (＿＿＿) 　　　　　　　　　　　　 彡⌒ ミ
-　　　　　　　　　　　　　　　　　　　　　　　　　　　ヽ(´･ω･｀)ノ　　5秒減るけどな
-　　　　　　　　　　　　　　　　　　　　　　　　　　　 (＿＿＿)
-            </pre>
-          </div>
-          <div id="typePanel">
-            <div class="alert alert-info h2 mb-0">
-              <div id="japanese">タイピングしよう！</div>
-              <div id="roma">Let's typing!</div>
-              <div id="hint" class="text-muted"></div>
-            </div>
-          </div>
-          <div id="keyboard" class="d-none simple-keyboard"></div>
-        </div>
+      </div>
+      <div id="countPanel" class="text-center d-none">
+        <div id="counter"></div>
+        <pre class="aa">
+
+　　彡 ⌒ ミ
+　　(´・ω・｀)
+　 ＿|　⊃／(＿＿_
+／　└-(＿＿＿_／
+￣￣￣￣￣￣￣
+        </pre>
       </div>
     </main>
     <footer class="pt-4 alert text-center">

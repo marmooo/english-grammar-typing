@@ -1,13 +1,15 @@
 const remSize = parseInt(getComputedStyle(document.documentElement).fontSize);
+const gamePanel = document.getElementById("gamePanel");
 const playPanel = document.getElementById("playPanel");
+const infoPanel = document.getElementById("infoPanel");
 const countPanel = document.getElementById("countPanel");
 const scorePanel = document.getElementById("scorePanel");
+const aaOuter = document.getElementById("aaOuter");
 const startButton = document.getElementById("startButton");
 const romaNode = document.getElementById("roma");
 const japanese = document.getElementById("japanese");
 const hint = document.getElementById("hint");
 const courseOption = document.getElementById("courseOption");
-const infoPanel = document.getElementById("infoPanel");
 const aa = document.getElementById("aa");
 const gameTime = 120;
 const tmpCanvas = document.createElement("canvas");
@@ -145,7 +147,6 @@ function toggleKeyboard() {
     virtualKeyboardOn.classList.remove("d-none");
     virtualKeyboardOff.classList.add("d-none");
     document.getElementById("keyboard").classList.remove("d-none");
-    aa.parentNode.style.height = calcAAOuterSize() + "px";
     resizeFontSize(aa);
   } else {
     virtualKeyboardOn.classList.add("d-none");
@@ -153,7 +154,6 @@ function toggleKeyboard() {
     document.getElementById("keyboard").classList.add("d-none");
     document.getElementById("guideSwitch").checked = false;
     guide = false;
-    aa.parentNode.style.height = calcAAOuterSize() + "px";
     resizeFontSize(aa);
   }
 }
@@ -165,14 +165,12 @@ function toggleGuide() {
     virtualKeyboardOn.classList.remove("d-none");
     virtualKeyboardOff.classList.add("d-none");
     document.getElementById("keyboard").classList.remove("d-none");
-    aa.parentNode.style.height = calcAAOuterSize() + "px";
     resizeFontSize(aa);
     guide = true;
   } else {
     virtualKeyboardOn.classList.add("d-none");
     virtualKeyboardOff.classList.remove("d-none");
     document.getElementById("keyboard").classList.add("d-none");
-    aa.parentNode.style.height = calcAAOuterSize() + "px";
     resizeFontSize(aa);
     guide = false;
   }
@@ -440,15 +438,6 @@ function replay() {
   scorePanel.classList.add("d-none");
 }
 
-function calcAAOuterSize() {
-  let height = document.documentElement.clientHeight;
-  height -= document.getElementById("headerNav").offsetHeight;
-  height -= document.getElementById("timePanel").offsetHeight;
-  height -= document.getElementById("typePanel").offsetHeight;
-  height -= document.getElementById("keyboard").offsetHeight;
-  return height;
-}
-
 function resizeFontSize(node) {
   // https://stackoverflow.com/questions/118241/
   function getTextWidth(text, font) {
@@ -482,7 +471,7 @@ function resizeFontSize(node) {
   const font = style.fontFamily;
   const fontSize = parseFloat(style.fontSize);
   const lineHeight = parseFloat(style.lineHeight) / fontSize;
-  const nodeHeight = calcAAOuterSize();
+  const nodeHeight = aaOuter.offsetHeight;
   const nodeWidth = infoPanel.clientWidth;
   const nodeRect = [nodeWidth, nodeHeight];
   const textRect = getTextRect(node.textContent, fontSize, font, lineHeight);
@@ -557,10 +546,8 @@ function countdown() {
   typeIndex = normalCount = errorCount = solveCount = 0;
   document.getElementById("guideSwitch").disabled = true;
   document.getElementById("virtualKeyboard").disabled = true;
-  infoPanel.classList.add("d-none");
-  playPanel.classList.add("d-none");
+  gamePanel.classList.add("d-none");
   countPanel.classList.remove("d-none");
-  scorePanel.classList.add("d-none");
   counter.textContent = 3;
   const timer = setInterval(function () {
     const counter = document.getElementById("counter");
@@ -573,11 +560,12 @@ function countdown() {
       clearInterval(timer);
       document.getElementById("guideSwitch").disabled = false;
       document.getElementById("virtualKeyboard").disabled = false;
+      gamePanel.classList.remove("d-none");
+      countPanel.classList.add("d-none");
       infoPanel.classList.remove("d-none");
       playPanel.classList.remove("d-none");
-      countPanel.classList.add("d-none");
+      aaOuter.classList.remove("d-none");
       scorePanel.classList.add("d-none");
-      aa.parentNode.style.height = calcAAOuterSize() + "px";
       resizeFontSize(aa);
       window.scrollTo({
         top: document.getElementById("timePanel").getBoundingClientRect().top +
@@ -661,6 +649,7 @@ courseOption.addEventListener("change", function () {
 function scoring() {
   infoPanel.classList.remove("d-none");
   playPanel.classList.add("d-none");
+  aaOuter.classList.add("d-none");
   countPanel.classList.add("d-none");
   scorePanel.classList.remove("d-none");
   document.removeEventListener("keydown", typeEvent);
@@ -676,14 +665,12 @@ function scoring() {
   document.addEventListener("keydown", startKeyEvent);
 }
 
-aa.parentNode.style.height = calcAAOuterSize() + "px";
 resizeFontSize(aa);
 
 document.getElementById("toggleDarkMode").onclick = toggleDarkMode;
 document.getElementById("toggleBGM").onclick = toggleBGM;
 document.getElementById("virtualKeyboard").onclick = toggleKeyboard;
 window.addEventListener("resize", function () {
-  aa.parentNode.style.height = calcAAOuterSize() + "px";
   resizeFontSize(aa);
 });
 mode.onclick = changeMode;
