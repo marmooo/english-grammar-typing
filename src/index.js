@@ -11,9 +11,10 @@ const japanese = document.getElementById("japanese");
 const hint = document.getElementById("hint");
 const courseOption = document.getElementById("courseOption");
 const aa = document.getElementById("aa");
-const gameTime = 120;
 const tmpCanvas = document.createElement("canvas");
 const mode = document.getElementById("mode");
+const gameTime = 120;
+let playing;
 let typeTimer;
 // https://dova-s.jp/bgm/play16121.html
 const bgm = new Audio("mp3/bgm.mp3");
@@ -75,18 +76,20 @@ const keyboardDisplay = {
 const simpleKeyboard = new SimpleKeyboard.default({
   layout: (navigator.language == "ja") ? layout109 : layout104,
   display: keyboardDisplay,
-  onInit: function () {
+  onInit: () => {
     document.getElementById("keyboard").classList.add("d-none");
   },
-  onKeyPress: function (input) {
+  onKeyPress: (input) => {
     switch (input) {
       case "{esc}":
-        return typeEventKey("Esc");
+        return typeEventKey("Escape");
       case "{space}":
         return typeEventKey(" ");
       case "無変換":
+      case "{altLeft}":
         return typeEventKey("NonConvert");
       case "変換":
+      case "{altRight}":
         return typeEventKey("Convert");
       case "🌏":
         if (simpleKeyboard.options.layout == layout109) {
@@ -372,14 +375,48 @@ function patchEvent(event) {
 }
 
 function typeEvent(event) {
-  const key = patchEvent(event);
-  if (key == " " || key == "Spacebar") {
-    event.preventDefault(); // ScrollLock
+  switch (event.code) {
+    case "AltLeft":
+      return typeEventKey("NonConvert");
+    case "AltRight":
+      return typeEventKey("Convert");
+    case "Space":
+      event.preventDefault();
+      // falls through
+    default:
+      return typeEventKey(event.key);
   }
-  typeEventKey(key);
 }
 
 function typeEventKey(key) {
+  switch (key) {
+    case "NonConvert":
+      [...romaNode.children].forEach((span) => {
+        span.style.visibility = "visible";
+      });
+      downTime(5);
+      return;
+    case "Convert": {
+      const text = romaNode.textContent;
+      loopVoice(text, 1);
+      return;
+    }
+    case "Shift":
+    case "CapsLock":
+      if (guide) {
+        simpleKeyboard.setOptions({ layoutName: "shift" });
+        showGuide(romaNode.childNodes[typeIndex]);
+      }
+      return;
+    case "Escape":
+      replay();
+      return;
+    case " ":
+      if (!playing) {
+        replay();
+        return;
+      }
+  }
   const currNode = romaNode.childNodes[typeIndex];
   if (key.length == 1) {
     if (key == currNode.textContent) {
@@ -400,38 +437,12 @@ function typeEventKey(key) {
     } else {
       showGuide(romaNode.childNodes[typeIndex]);
     }
-  } else {
-    switch (key) {
-      case "NonConvert":
-        [...romaNode.children].forEach((span) => {
-          span.style.visibility = "visible";
-        });
-        downTime(5);
-        break;
-      case "Convert": {
-        const text = romaNode.textContent;
-        loopVoice(text, 1);
-        break;
-      }
-      case "Shift":
-      case "CapsLock":
-        if (guide) {
-          simpleKeyboard.setOptions({ layoutName: "shift" });
-          showGuide(romaNode.childNodes[typeIndex]);
-        }
-        break;
-      case "Escape":
-      case "Esc":
-        replay();
-        break;
-    }
   }
 }
 
 function replay() {
   clearInterval(typeTimer);
   removeGuide(romaNode.childNodes[typeIndex]);
-  document.removeEventListener("keydown", typeEvent);
   initTime();
   loadProblems();
   countdown();
@@ -545,6 +556,7 @@ function typable() {
 }
 
 function countdown() {
+  playing = true;
   typeIndex = normalCount = errorCount = solveCount = 0;
   document.getElementById("guideSwitch").disabled = true;
   document.getElementById("virtualKeyboard").disabled = true;
@@ -579,17 +591,8 @@ function countdown() {
       if (localStorage.getItem("bgm") == 1) {
         bgm.play();
       }
-      document.addEventListener("keydown", typeEvent);
     }
   }, 1000);
-}
-
-function startKeyEvent(event) {
-  if (event.key == " " || event.key == "Spacebar") {
-    event.preventDefault();
-    document.removeEventListener("keydown", startKeyEvent);
-    replay();
-  }
 }
 
 function startTypeTimer() {
@@ -649,12 +652,12 @@ courseOption.addEventListener("change", function () {
 });
 
 function scoring() {
+  playing = false;
   infoPanel.classList.remove("d-none");
   playPanel.classList.add("d-none");
   aaOuter.classList.add("d-none");
   countPanel.classList.add("d-none");
   scorePanel.classList.remove("d-none");
-  document.removeEventListener("keydown", typeEvent);
   const course = courseOption.radio.value;
   const typeSpeed = (normalCount / gameTime).toFixed(2);
   document.getElementById("totalType").textContent = normalCount + errorCount;
@@ -664,7 +667,6 @@ function scoring() {
     "https://twitter.com/intent/tweet?text=英文法タイピングの" + course +
     "をプレイしたよ! (速度: " + typeSpeed + "回/秒) " +
     "&url=https%3a%2f%2fmarmooo.github.com/english-grammar-typing/%2f&hashtags=英文法タイピング";
-  document.addEventListener("keydown", startKeyEvent);
 }
 
 resizeFontSize(aa);
@@ -679,7 +681,7 @@ mode.onclick = changeMode;
 startButton.addEventListener("click", replay);
 document.getElementById("guideSwitch").onchange = toggleGuide;
 document.addEventListener("keyup", upKeyEvent);
-document.addEventListener("keydown", startKeyEvent);
+document.addEventListener("keydown", typeEvent);
 document.addEventListener("click", unlockAudio, {
   once: true,
   useCapture: true,
