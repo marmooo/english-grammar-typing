@@ -15,6 +15,7 @@ const tmpCanvas = document.createElement("canvas");
 const mode = document.getElementById("mode");
 const gameTime = 120;
 let playing;
+let countdowning;
 let typeTimer;
 // https://dova-s.jp/bgm/play16121.html
 const bgm = new Audio("mp3/bgm.mp3");
@@ -436,11 +437,6 @@ function replay() {
   initTime();
   loadProblems();
   countdown();
-  typeIndex =
-    normalCount =
-    errorCount =
-    solveCount =
-      0;
   countPanel.classList.remove("d-none");
   scorePanel.classList.add("d-none");
 }
@@ -550,7 +546,8 @@ function typable() {
 }
 
 function countdown() {
-  playing = true;
+  if (countdowning) return;
+  countdowning = true;
   typeIndex =
     normalCount =
     errorCount =
@@ -569,6 +566,8 @@ function countdown() {
       counter.style.backgroundColor = colors[t];
       counter.textContent = t;
     } else {
+      countdowning = false;
+      playing = true;
       clearInterval(timer);
       document.getElementById("guideSwitch").disabled = false;
       document.getElementById("virtualKeyboard").disabled = false;
