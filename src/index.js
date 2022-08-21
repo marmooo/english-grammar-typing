@@ -552,9 +552,11 @@ function countdown() {
     errorCount =
     solveCount =
       0;
+  document.getElementById("courseOption").classList.remove("show");
   document.getElementById("guideSwitch").disabled = true;
   document.getElementById("virtualKeyboard").disabled = true;
   gamePanel.classList.add("d-none");
+  infoPanel.classList.add("d-none");
   countPanel.classList.remove("d-none");
   counter.textContent = 3;
   const timer = setInterval(() => {
