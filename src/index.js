@@ -3,7 +3,6 @@ const gamePanel = document.getElementById("gamePanel");
 const infoPanel = document.getElementById("infoPanel");
 const countPanel = document.getElementById("countPanel");
 const scorePanel = document.getElementById("scorePanel");
-const aaOuter = document.getElementById("aaOuter");
 const startButton = document.getElementById("startButton");
 const romaNode = document.getElementById("roma");
 const japanese = document.getElementById("japanese");
@@ -473,7 +472,7 @@ function resizeFontSize(node) {
   const font = style.fontFamily;
   const fontSize = parseFloat(style.fontSize);
   const lineHeight = parseFloat(style.lineHeight) / fontSize;
-  const nodeHeight = aaOuter.offsetHeight;
+  const nodeHeight = document.getElementById("aaOuter").offsetHeight;
   const nodeWidth = infoPanel.clientWidth;
   const nodeRect = [nodeWidth, nodeHeight];
   const textRect = getTextRect(node.textContent, fontSize, font, lineHeight);
@@ -576,8 +575,7 @@ function countdown() {
       scorePanel.classList.add("d-none");
       resizeFontSize(aa);
       window.scrollTo({
-        top: document.getElementById("gamePanel").getBoundingClientRect().top +
-          document.documentElement.scrollTop,
+        top: document.getElementById("typePanel").getBoundingClientRect().top,
         behavior: "auto",
       });
       typable();
