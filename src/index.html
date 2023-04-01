@@ -114,8 +114,8 @@
 sudo apt install festival speech-dispatcher-festival</code></pre>
       </div>
         <div id="infoPanel">
-          <div class="row text-center">
-            <div class="col-sm text-start pb-3">
+          <div class="row">
+            <div class="col-sm pb-3">
               <p>英文法とタイピングを同時に学ぶアプリです。</p>
             <h6>キーバインド</h6>
             <table class="table table-sm table-striped">
@@ -123,7 +123,7 @@ sudo apt install festival speech-dispatcher-festival</code></pre>
               <tr><td><kbd>変換</kbd><kbd class="ms-1">Alt Right</kbd></td><td>音声読み上げ</td></tr>
             </table>
           </div>
-          <div id="timePanel" class="col-sm">
+          <div id="timePanel" class="col-sm text-center">
             <div class="alert alert-info">
               <div class="row flex-wrap">
                 <div class="h5 text-nowrap me-4 notranslate">
@@ -194,34 +194,55 @@ sudo apt install festival speech-dispatcher-festival</code></pre>
             <input class="form-check-input" type="radio" name="radio" value="代名詞">代名詞
           </label>
           <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="5W1H">5W1H
-          </label>
-          <label class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="radio" value="まとめ1-3">まとめ1-3
           </label>
           <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="現在進行形">現在進行形
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="過去形-規則動詞">過去形(規則動詞)
-          </label>
-          <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="過去形-不規則動詞">過去形(不規規則動詞)
+            <input class="form-check-input" type="radio" name="radio" value="総まとめ1-1">総まとめ1-1
           </label>
           <label class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="radio" value="can">can
           </label>
           <label class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radio" value="Whose">Whose
+          </label>
+          <label class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radio" value="5W1H">5W1H
+          </label>
+          <label class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="radio" value="まとめ1-4">まとめ1-4
           </label>
           <label class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" name="radio" value="総まとめ1">総まとめ1
+            <input class="form-check-input" type="radio" name="radio" value="過去形-規則動詞">過去形(規則動詞)
           </label>
           <label class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="radio" value="過去形-be動詞">過去形(be動詞)
           </label>
           <label class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radio" value="過去形-不規則動詞">過去形(不規規則動詞)
+          </label>
+          <label class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radio" value="まとめ1-4">まとめ1-5
+          </label>
+          <label class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radio" value="命令文">命令文
+          </label>
+          <label class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radio" value="感嘆文">感嘆文
+          </label>
+          <label class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radio" value="現在進行形">現在進行形
+          </label>
+          <label class="form-check form-check-inline">
             <input class="form-check-input" type="radio" name="radio" value="過去進行形">過去進行形
+          </label>
+          <label class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radio" value="まとめ1-5">まとめ1-6
+          </label>
+          <label class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radio" value="総まとめ1-2">総まとめ1-2
+          </label>
+          <label class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="radio" value="総まとめ1-3">総まとめ1-3
           </label>
         </form>
       </div>
@@ -257,6 +278,17 @@ sudo apt install festival speech-dispatcher-festival</code></pre>
           <div id="keyboard" class="d-none simple-keyboard notranslate"></div>
         </div>
       </div>
+      <div id="countPanel" class="text-center d-none notranslate">
+        <div id="counter"></div>
+        <pre class="aa">
+
+　　彡 ⌒ ミ
+　　(´・ω・｀)
+　 ＿|　⊃／(＿＿_
+／　└-(＿＿＿_／
+￣￣￣￣￣￣￣
+        </pre>
+      </div>
       <div id="scorePanel" class="text-center pb-3 d-none">
         <h3 class="pt-3">スコア</h3>
         <div class="d-flex justify-content-center align-items-center">
@@ -280,17 +312,6 @@ sudo apt install festival speech-dispatcher-festival</code></pre>
           </tbody>
         </table>
         <a id="twitter" target="_blank" href="https://twitter.com/intent/tweet?text=英文法タイピングで遊んだよ!&url=https://marmooo.github.com/english-grammar-typing/&hashtags=英文法タイピング" class="btn btn-primary" role="button">Twitter でつぶやく</a>
-      </div>
-      <div id="countPanel" class="text-center d-none notranslate">
-        <div id="counter"></div>
-        <pre class="aa">
-
-　　彡 ⌒ ミ
-　　(´・ω・｀)
-　 ＿|　⊃／(＿＿_
-／　└-(＿＿＿_／
-￣￣￣￣￣￣￣
-        </pre>
       </div>
     </main>
     <footer class="pt-4 alert text-center">
