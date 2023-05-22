@@ -374,8 +374,8 @@ function upKeyEvent(event) {
   switch (event.key) {
     case "Shift":
     case "CapsLock":
+      simpleKeyboard.setOptions({ layoutName: "default" });
       if (guide) {
-        simpleKeyboard.setOptions({ layoutName: "default" });
         showGuide(romaNode.childNodes[typeIndex]);
       }
   }
@@ -395,12 +395,35 @@ function patchEvent(event) {
   }
 }
 
+function convertJaEn(event) {
+  if (event.shiftKey) {
+    if (simpleKeyboard.options.layout == layout109) {
+      return typeEventKey('"');
+    } else {
+      return typeEventKey("@");
+    }
+  }
+  return typeEventKey(event.key);
+}
+
 function typeEvent(event) {
   switch (event.code) {
     case "AltLeft":
       return typeEventKey("NonConvert");
     case "AltRight":
       return typeEventKey("Convert");
+    case "Digit2":
+      return convertJaEn(event, '"', "@");
+    case "Digit6":
+      return convertJaEn(event, '&', "^");
+    case "Digit7":
+      return convertJaEn(event, "'", "&");
+    case "Digit8":
+      return convertJaEn(event, "(", "*");
+    case "Digit9":
+      return convertJaEn(event, ")", "(");
+    case "Digit0":
+      return convertJaEn(event, "~", ")");
     case "Space":
       event.preventDefault();
       // falls through
@@ -424,8 +447,8 @@ function typeEventKey(key) {
     }
     case "Shift":
     case "CapsLock":
+      simpleKeyboard.setOptions({ layoutName: "shift" });
       if (guide) {
-        simpleKeyboard.setOptions({ layoutName: "shift" });
         showGuide(romaNode.childNodes[typeIndex]);
       }
       return;
