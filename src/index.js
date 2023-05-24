@@ -407,6 +407,18 @@ function typeEvent(event) {
       return convertShiftJaEn(event, ")", "(");
     case "Digit0":
       return convertShiftJaEn(event, "~", ")");
+    case "Minus":
+      return convertShiftJaEn(event, "=", "_");
+    case "Equal":
+      return convertJaEn(event, "^", "~", "=", "+");
+    case "BracketLeft":
+      return convertJaEn(event, "@", "`", "{", "[");
+    case "BracketRight":
+      return convertJaEn(event, "{", "[", "}", "]");
+    case "Semicolon":
+      return convertShiftJaEn(event, "+", ";");
+    case "Quote":
+      return convertJaEn(event, ":", "+", "'", '"');
     case "Space":
       event.preventDefault();
       // falls through
