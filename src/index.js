@@ -165,8 +165,8 @@ function toggleKeyboard() {
   }
 }
 
-function toggleGuide() {
-  if (this.checked) {
+function toggleGuide(event) {
+  if (event.target.checked) {
     guide = true;
   } else {
     guide = false;
@@ -667,13 +667,13 @@ function initTime() {
   document.getElementById("time").textContent = gameTime;
 }
 
-function changeMode() {
-  if (this.textContent == "EASY") {
-    this.textContent = "NORMAL";
-  } else if (this.textContent == "NORMAL") {
-    this.textContent = "HARD";
+function changeMode(event) {
+  if (event.target.textContent == "EASY") {
+    event.target.textContent = "NORMAL";
+  } else if (event.target.textContent == "NORMAL") {
+    event.target.textContent = "HARD";
   } else {
-    this.textContent = "EASY";
+    event.target.textContent = "EASY";
   }
 }
 
