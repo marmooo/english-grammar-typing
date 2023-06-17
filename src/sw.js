@@ -1,4 +1,4 @@
-var CACHE_NAME = "2023-05-28 01:30";
+var CACHE_NAME = "2023-06-18 08:25";
 var urlsToCache = [
   "/english-grammar-typing/",
   "/english-grammar-typing/index.js",
@@ -9,7 +9,6 @@ var urlsToCache = [
   "/english-grammar-typing/mp3/keyboard.mp3",
   "/english-grammar-typing/favicon/favicon.svg",
   "https://marmooo.github.io/fonts/textar-light.woff2",
-  "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css",
   "https://cdn.jsdelivr.net/npm/simple-keyboard@3.4.52/build/index.min.js",
 ];
 
