@@ -452,7 +452,7 @@ function typeEventKey(key) {
     case "Escape":
       startGame();
       return;
-    case " ":
+    case "Enter":
       if (!playing) {
         startGame();
         return;
