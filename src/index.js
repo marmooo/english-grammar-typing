@@ -450,11 +450,11 @@ function typeEventKey(key) {
       }
       return;
     case "Escape":
-      replay();
+      startGame();
       return;
     case " ":
       if (!playing) {
-        replay();
+        startGame();
         return;
       }
   }
@@ -481,7 +481,7 @@ function typeEventKey(key) {
   }
 }
 
-function replay() {
+function startGame() {
   clearInterval(typeTimer);
   removeGuide(romaNode.childNodes[typeIndex]);
   initTime();
@@ -710,7 +710,7 @@ window.addEventListener("resize", () => {
   resizeFontSize(aa);
 });
 mode.onclick = changeMode;
-startButton.addEventListener("click", replay);
+startButton.addEventListener("click", startGame);
 document.getElementById("guideSwitch").onchange = toggleGuide;
 document.addEventListener("keyup", upKeyEvent);
 document.addEventListener("keydown", typeEvent);
