@@ -313,7 +313,7 @@ function underlineSpace(currNode) {
 }
 
 function nextProblem() {
-  playAudio("correct");
+  playAudio("correct", 0.3);
   typeIndex = 0;
   solveCount += 1;
   typable();
