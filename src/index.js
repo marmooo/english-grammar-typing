@@ -465,11 +465,6 @@ function typeEventKey(key) {
       removeGuide(currNode);
       underlineSpace(currNode);
     } else {
-      // const state = checkTypeStyle(currNode, currNode.textContent, key, romaNode);
-      // if (!state) {
-      //   playAudio("incorrect", 0.3);
-      //   errorCount += 1;
-      // }
       playAudio("incorrect", 0.3);
       errorCount += 1;
     }
