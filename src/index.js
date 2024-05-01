@@ -1,3 +1,4 @@
+import simpleKeyboard from "https://cdn.jsdelivr.net/npm/simple-keyboard@3.7.77/+esm";
 import { Collapse } from "https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/+esm";
 
 const remSize = parseInt(getComputedStyle(document.documentElement).fontSize);
@@ -69,7 +70,7 @@ const keyboardDisplay = {
   "{altRight}": "Alt",
   "🌏": (navigator.language.startsWith("ja")) ? "🇯🇵" : "🇺🇸",
 };
-const simpleKeyboard = new SimpleKeyboard.default({
+const keyboard = new simpleKeyboard.default({
   layout: (navigator.language.startsWith("ja")) ? layout109 : layout104,
   display: keyboardDisplay,
   onInit: () => {
@@ -88,15 +89,15 @@ const simpleKeyboard = new SimpleKeyboard.default({
       case "{altRight}":
         return typeEventKey("Convert");
       case "🌏":
-        if (simpleKeyboard.options.layout == layout109) {
+        if (keyboard.options.layout == layout109) {
           keyboardDisplay["🌏"] = "🇺🇸";
-          simpleKeyboard.setOptions({
+          keyboard.setOptions({
             layout: layout104,
             display: keyboardDisplay,
           });
         } else {
           keyboardDisplay["🌏"] = "🇯🇵";
-          simpleKeyboard.setOptions({
+          keyboard.setOptions({
             layout: layout109,
             display: keyboardDisplay,
           });
@@ -104,10 +105,10 @@ const simpleKeyboard = new SimpleKeyboard.default({
         break;
       case "{shift}":
       case "{lock}": {
-        const shiftToggle = (simpleKeyboard.options.layoutName == "default")
+        const shiftToggle = (keyboard.options.layoutName == "default")
           ? "shift"
           : "default";
-        simpleKeyboard.setOptions({ layoutName: shiftToggle });
+        keyboard.setOptions({ layoutName: shiftToggle });
         break;
       }
       default:
@@ -326,17 +327,17 @@ function removeGuide(currNode) {
   if (prevNode) {
     let key = prevNode.textContent;
     if (key == " ") key = "{space}";
-    const button = simpleKeyboard.getButtonElement(key);
+    const button = keyboard.getButtonElement(key);
     button.classList.remove("guide");
   }
   let key = currNode.textContent;
   if (key == " ") key = "{space}";
-  const button = simpleKeyboard.getButtonElement(key);
+  const button = keyboard.getButtonElement(key);
   if (button) {
     button.classList.remove("guide");
-    simpleKeyboard.setOptions({ layoutName: "default" });
+    keyboard.setOptions({ layoutName: "default" });
   } else {
-    const shift = simpleKeyboard.getButtonElement("{shift}");
+    const shift = keyboard.getButtonElement("{shift}");
     if (shift) shift.classList.remove("guide");
   }
 }
@@ -345,11 +346,11 @@ function showGuide(currNode) {
   if (guide) {
     let key = currNode.textContent;
     if (key == " ") key = "{space}";
-    const button = simpleKeyboard.getButtonElement(key);
+    const button = keyboard.getButtonElement(key);
     if (button) {
       button.classList.add("guide");
     } else {
-      const shift = simpleKeyboard.getButtonElement("{shift}");
+      const shift = keyboard.getButtonElement("{shift}");
       if (shift) shift.classList.add("guide");
     }
   }
@@ -360,7 +361,7 @@ function upKeyEvent(event) {
     case "Shift":
     case "CapsLock":
       if (guide) {
-        simpleKeyboard.setOptions({ layoutName: "default" });
+        keyboard.setOptions({ layoutName: "default" });
         showGuide(romaNode.childNodes[typeIndex]);
       }
   }
@@ -368,13 +369,13 @@ function upKeyEvent(event) {
 
 function convertJaEn(event, jaDefault, jaShift, enDefault, enShift) {
   if (event.shiftKey) {
-    if (simpleKeyboard.options.layout == layout109) {
+    if (keyboard.options.layout == layout109) {
       return typeEventKey(jaShift);
     } else {
       return typeEventKey(enShift);
     }
   } else {
-    if (simpleKeyboard.options.layout == layout109) {
+    if (keyboard.options.layout == layout109) {
       return typeEventKey(jaDefault);
     } else {
       return typeEventKey(enDefault);
@@ -384,7 +385,7 @@ function convertJaEn(event, jaDefault, jaShift, enDefault, enShift) {
 
 function convertShiftJaEn(event, ja, en) {
   if (event.shiftKey) {
-    if (simpleKeyboard.options.layout == layout109) {
+    if (keyboard.options.layout == layout109) {
       return typeEventKey(ja);
     } else {
       return typeEventKey(en);
@@ -447,7 +448,7 @@ function typeEventKey(key) {
     case "Shift":
     case "CapsLock":
       if (guide) {
-        simpleKeyboard.setOptions({ layoutName: "shift" });
+        keyboard.setOptions({ layoutName: "shift" });
         showGuide(romaNode.childNodes[typeIndex]);
       }
       return;
