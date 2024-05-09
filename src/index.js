@@ -599,6 +599,7 @@ function countdown() {
     errorCount =
     solveCount =
       0;
+  if (localStorage.getItem("bgm") == 1) bgm.play();
   document.getElementById("courseOption").classList.remove("show");
   document.getElementById("guideSwitch").disabled = true;
   document.getElementById("virtualKeyboard").disabled = true;
@@ -630,9 +631,6 @@ function countdown() {
       });
       typable();
       startTypeTimer();
-      if (localStorage.getItem("bgm") == 1) {
-        bgm.play();
-      }
     }
   }, 1000);
 }
