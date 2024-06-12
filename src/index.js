@@ -22,11 +22,11 @@ let typeTimer;
 const bgm = new Audio("mp3/bgm.mp3");
 bgm.volume = 0.1;
 bgm.loop = true;
-let typeIndex = 0;
 let errorCount = 0;
 let normalCount = 0;
 let solveCount = 0;
 let problems = [];
+let problem;
 let guide = false;
 const layout104 = {
   "default": [
@@ -297,40 +297,21 @@ function loadProblems() {
     });
 }
 
-function typeNormal(currNode) {
-  currNode.style.visibility = "visible";
-  playAudio("keyboard");
-  currNode.classList.add("typed");
-  typeIndex += 1;
-  normalCount += 1;
-}
-
-function underlineSpace(currNode) {
-  if (currNode.textContent == " ") {
-    currNode.style.removeProperty("text-decoration");
-  }
-  const nextNode = currNode.nextElementSibling;
-  if (nextNode && nextNode.textContent == " ") {
-    nextNode.style.textDecoration = "underline";
+function underlineSpace(node, key) {
+  if (key == " ") {
+    node.style.textDecoration = "underline";
+  } else {
+    node.style.removeProperty("text-decoration");
   }
 }
 
 function nextProblem() {
   playAudio("correct", 0.3);
-  typeIndex = 0;
   solveCount += 1;
   typable();
 }
 
-function removeGuide(currNode) {
-  const prevNode = currNode.previousSiblingElement;
-  if (prevNode) {
-    let key = prevNode.textContent;
-    if (key == " ") key = "{space}";
-    const button = keyboard.getButtonElement(key);
-    button.classList.remove("guide");
-  }
-  let key = currNode.textContent;
+function removeGuide(key) {
   if (key == " ") key = "{space}";
   const button = keyboard.getButtonElement(key);
   if (button) {
@@ -342,17 +323,14 @@ function removeGuide(currNode) {
   }
 }
 
-function showGuide(currNode) {
-  if (guide) {
-    let key = currNode.textContent;
-    if (key == " ") key = "{space}";
-    const button = keyboard.getButtonElement(key);
-    if (button) {
-      button.classList.add("guide");
-    } else {
-      const shift = keyboard.getButtonElement("{shift}");
-      if (shift) shift.classList.add("guide");
-    }
+function showGuide(key) {
+  if (key == " ") key = "{space}";
+  const button = keyboard.getButtonElement(key);
+  if (button) {
+    button.classList.add("guide");
+  } else {
+    const shift = keyboard.getButtonElement("{shift}");
+    if (shift) shift.classList.add("guide");
   }
 }
 
@@ -362,7 +340,7 @@ function upKeyEvent(event) {
     case "CapsLock":
       if (guide) {
         keyboard.setOptions({ layoutName: "default" });
-        showGuide(romaNode.childNodes[typeIndex]);
+        showGuide(romaNode.children[1].textContent);
       }
   }
 }
@@ -435,53 +413,56 @@ function typeEvent(event) {
 function typeEventKey(key) {
   switch (key) {
     case "NonConvert":
-      [...romaNode.children].forEach((span) => {
-        span.style.visibility = "visible";
-      });
+      changeVisibility("visible");
       downTime(5);
       return;
-    case "Convert": {
-      const text = romaNode.textContent;
-      loopVoice(text, 1);
+    case "Convert":
+      loopVoice(problem.en, 1);
       return;
-    }
     case "Shift":
     case "CapsLock":
       if (guide) {
         keyboard.setOptions({ layoutName: "shift" });
-        showGuide(romaNode.childNodes[typeIndex]);
+        showGuide(romaNode.children[1].textContent);
       }
       return;
     case "Escape":
-      startGame();
+      replay();
       return;
     case "Enter":
       if (!playing) {
-        startGame();
+        replay();
         return;
       }
   }
-  const currNode = romaNode.childNodes[typeIndex];
   if (key.length == 1) {
-    if (key == currNode.textContent) {
-      typeNormal(currNode);
-      removeGuide(currNode);
-      underlineSpace(currNode);
+    const children = romaNode.children;
+    const typeIndex = children[0].textContent.length + 1;
+    const wantedKey = children[1].textContent;
+    if (key == wantedKey) {
+      playAudio("keyboard");
+      normalCount += 1;
+      const nextWantedKey = problem.en[typeIndex];
+      removeGuide(wantedKey);
+      children[0].textContent += key;
+      children[1].textContent = nextWantedKey;
+      children[2].textContent = problem.en.slice(typeIndex + 1);
+      underlineSpace(children[1], nextWantedKey);
+      if (typeIndex == problem.en.length) {
+        nextProblem();
+      } else if (guide) {
+        showGuide(nextWantedKey);
+      }
     } else {
       playAudio("incorrect", 0.3);
       errorCount += 1;
     }
-    if (typeIndex == romaNode.childNodes.length) {
-      nextProblem();
-    } else {
-      showGuide(romaNode.childNodes[typeIndex]);
-    }
   }
 }
 
-function startGame() {
+function replay() {
   clearInterval(typeTimer);
-  removeGuide(romaNode.childNodes[typeIndex]);
+  removeGuide(romaNode.children[1].textContent);
   initTime();
   loadProblems();
   countdown();
@@ -563,8 +544,14 @@ function shuffle(array) {
   return array;
 }
 
+function changeVisibility(visibility) {
+  const children = romaNode.children;
+  children[1].style.visibility = visibility;
+  children[2].style.visibility = visibility;
+}
+
 function typable() {
-  const problem = problems[getRandomInt(0, problems.length)];
+  problem = problems[getRandomInt(0, problems.length)];
   japanese.textContent = problem.ja;
   const roma = problem.en;
   if (mode.textContent == "NORMAL") {
@@ -576,29 +563,21 @@ function typable() {
     hint.classList.add("d-none");
   }
   loopVoice(roma, 2);
-  while (romaNode.firstChild) {
-    romaNode.removeChild(romaNode.firstChild);
-  }
-  for (let i = 0; i < roma.length; i++) {
-    const span = document.createElement("span");
-    if (mode.textContent != "EASY") {
-      span.style.visibility = "hidden";
-    }
-    span.textContent = roma[i];
-    romaNode.appendChild(span);
-  }
+  const children = romaNode.children;
+  children[0].textContent = "";
+  children[1].textContent = roma[0];
+  children[2].textContent = roma.slice(1);
+
+  const visibility = (mode.textContent == "EASY") ? "visible" : "hidden";
+  changeVisibility(visibility);
   // resizeFontSize(aa);
-  showGuide(romaNode.childNodes[0]);
+  if (guide) showGuide(roma[0]);
 }
 
 function countdown() {
   if (countdowning) return;
   countdowning = true;
-  typeIndex =
-    normalCount =
-    errorCount =
-    solveCount =
-      0;
+  normalCount = errorCount = solveCount = 0;
   if (localStorage.getItem("bgm") == 1) bgm.play();
   document.getElementById("courseOption").classList.remove("show");
   document.getElementById("guideSwitch").disabled = true;
@@ -666,6 +645,8 @@ function initTime() {
 }
 
 function changeMode(event) {
+  normalCount = errorCount = solveCount = 0;
+  document.getElementById("time").textContent = gameTime;
   if (event.target.textContent == "EASY") {
     event.target.textContent = "NORMAL";
   } else if (event.target.textContent == "NORMAL") {
@@ -673,6 +654,8 @@ function changeMode(event) {
   } else {
     event.target.textContent = "EASY";
   }
+  const visibility = (mode.textContent == "EASY") ? "visible" : "hidden";
+  changeVisibility(visibility);
 }
 
 courseOption.addEventListener("change", () => {
@@ -707,7 +690,7 @@ globalThis.addEventListener("resize", () => {
   resizeFontSize(aa);
 });
 mode.onclick = changeMode;
-startButton.addEventListener("click", startGame);
+startButton.addEventListener("click", replay);
 document.getElementById("guideSwitch").onchange = toggleGuide;
 document.addEventListener("keyup", upKeyEvent);
 document.addEventListener("keydown", typeEvent);
