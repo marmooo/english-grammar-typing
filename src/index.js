@@ -630,7 +630,7 @@ function countdown() {
       scorePanel.classList.add("d-none");
       resizeFontSize(aa);
       globalThis.scrollTo({
-        top: document.getElementById("typePanel").getBoundingClientRect().top,
+        top: document.getElementById("gamePanel").getBoundingClientRect().top,
         behavior: "auto",
       });
       typable();
