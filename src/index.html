@@ -54,11 +54,10 @@
         font-size:10rem; width:12rem; height:12rem; line-height:12rem; border-radius: 50%;
         background:tomato; color:black; margin:auto; }
       #aaOuter {
+        height:calc(100vh - 340px); overflow:hidden;
         background:transparent; display:flex; align-items:center; justify-content:center;
-        overflow:hidden;
       }
       #aa { position:relative; top:0; left:0; margin:auto; }
-      #gamePanel {  height:calc(100vh - 320px); }
       #typePanel { font-variant-ligatures:none; word-wrap: break-word; }
       #keyboard { touch-action:manipulation; }
       .hg-theme-default .hg-button.hg-standardBtn[data-skbtn="🌏"] { max-width:80px; }
@@ -240,8 +239,8 @@ sudo apt install festival speech-dispatcher-festival</code></pre>
           </label>
         </form>
       </div>
-      <div id="gamePanel" class="d-flex flex-column">
-        <div id="aaOuter" class="flex-grow-1 notranslate">
+      <div id="gamePanel" class="positioin-relative overflow-hidden">
+        <div id="aaOuter" class="notranslate">
           <pre id="aa" class="aa">
 　　　　　　　　　　　　　　　　　人人人人人人人人人人人人人人人
 　　　　　　　彡⌒ ミ 　　　　＞　　　スペルがわからない時は？　　＜ 　　　　　　 彡⌒ ミ
