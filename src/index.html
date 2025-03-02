@@ -239,40 +239,7 @@ sudo apt install festival speech-dispatcher-festival</code></pre>
           </label>
         </form>
       </div>
-      <div id="gamePanel" class="positioin-relative overflow-hidden">
-        <div id="aaOuter" class="notranslate">
-          <pre id="aa" class="aa">
-　　　　　　　　　　　　　　　　　人人人人人人人人人人人人人人人
-　　　　　　　彡⌒ ミ 　　　　＞　　　スペルがわからない時は？　　＜ 　　　　　　 彡⌒ ミ
-　　　　　　ヽ(´･ω･｀)ノ　　　￣^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^￣ 　　　　　ヽ(´･ω･｀)ノ
-　　　　　　　(＿＿＿) 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 (＿＿＿)
-　　　　　　　　　　　　　　　　　　　　　 三　(；´・ω）
-　　　　　　　　　　　　　　　　　　　　　三 ｰ（‐∪─→ 　　　　彡⌒ ミ　　ヒント機能があるぞ！
-　　彡⌒ ミ 　　　　　　　　　 三 ／￣￣￣ 》 ￣＼ 　　　　 ヽ(´･ω･｀)ノ
-　　ヽ(´･ω･｀)ノ　　　　　　三三 |　　　　　　Ｕ　・　| 　　　　 (＿＿＿) 　　　　　　　彡⌒ ミ
-　　(＿＿＿) 　　　　　　　 三 と|　　　 　　　　ι| |　　　　　　　　　 　　　　　　　ヽ(´･ω･｀)ノ
-　　　　　　　　　　　　　　　　三 /_∧∨￣￣/_∧Ｕ　　　　　　　　　 　　　　　　　　(＿＿＿)
-　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 彡⌒ ミ
-　　　　　　　　　 彡⌒ ミ 　　　　　　　　　　　　　　　　　　　　　　 ヽ(´･ω･｀)ノ
-　　　　　　　　　ヽ(´･ω･｀)ノ　　　　　　　　　　　　　　　　　　　　　 (＿＿＿)
-　　　　　　　　　 (＿＿＿) 　　　　　　　　　　　　 彡⌒ ミ
-　　　　　　　　　　　　　　　　　　　　　　　　　　　ヽ(´･ω･｀)ノ　　5秒へるけどな
-　　　　　　　　　　　　　　　　　　　　　　　　　　　 (＿＿＿)
-          </pre>
-        </div>
-        <div id="playPanel">
-          <div id="typePanel">
-            <div class="alert alert-info mb-0 h2 text-center">
-              <div id="japanese">タイピングしよう！</div>
-              <div id="roma" class="notranslate">
-                <span class="inputed"></span><span class="wanted">L</span><span class="remained">et's typing!</span>
-              </div>
-              <div id="hint" class="text-muted notranslate"></div>
-            </div>
-          </div>
-          <div id="keyboard" class="d-none simple-keyboard notranslate"></div>
-        </div>
-      </div>
+      <div id="gamePanel"></div>
       <div id="countPanel" class="text-center d-none notranslate">
         <div id="counter"></div>
         <pre class="aa">
@@ -318,6 +285,38 @@ sudo apt install festival speech-dispatcher-festival</code></pre>
       <div class="text-muted">&copy; <a href="https://github.com/marmooo">marmooo</a>
       </div>
     </footer>
+    <template id="gamePanelTemplate">
+      <div id="aaOuter" class="notranslate">
+        <pre id="aa" class="aa">
+　　　　　　　　　　　　　　　　　人人人人人人人人人人人人人人人
+　　　　　　　彡⌒ ミ 　　　　＞　　　スペルがわからない時は？　　＜ 　　　　　　 彡⌒ ミ
+　　　　　　ヽ(´･ω･｀)ノ　　　￣^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^Ｙ^￣ 　　　　　ヽ(´･ω･｀)ノ
+　　　　　　　(＿＿＿) 　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 (＿＿＿)
+　　　　　　　　　　　　　　　　　　　　　 三　(；´・ω）
+　　　　　　　　　　　　　　　　　　　　　三 ｰ（‐∪─→ 　　　　彡⌒ ミ　　ヒント機能があるぞ！
+　　彡⌒ ミ 　　　　　　　　　 三 ／￣￣￣ 》 ￣＼ 　　　　 ヽ(´･ω･｀)ノ
+　　ヽ(´･ω･｀)ノ　　　　　　三三 |　　　　　　Ｕ　・　| 　　　　 (＿＿＿) 　　　　　　　彡⌒ ミ
+　　(＿＿＿) 　　　　　　　 三 と|　　　 　　　　ι| |　　　　　　　　　 　　　　　　　ヽ(´･ω･｀)ノ
+　　　　　　　　　　　　　　　　三 /_∧∨￣￣/_∧Ｕ　　　　　　　　　 　　　　　　　　(＿＿＿)
+　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　　 彡⌒ ミ
+　　　　　　　　　 彡⌒ ミ 　　　　　　　　　　　　　　　　　　　　　　 ヽ(´･ω･｀)ノ
+　　　　　　　　　ヽ(´･ω･｀)ノ　　　　　　　　　　　　　　　　　　　　　 (＿＿＿)
+　　　　　　　　　 (＿＿＿) 　　　　　　　　　　　　 彡⌒ ミ
+　　　　　　　　　　　　　　　　　　　　　　　　　　　ヽ(´･ω･｀)ノ　　5秒へるけどな
+　　　　　　　　　　　　　　　　　　　　　　　　　　　 (＿＿＿)
+        </pre>
+      </div>
+      <div id="typePanel">
+        <div class="alert alert-info mb-0 h2 text-center">
+          <div id="japanese">タイピングしよう！</div>
+          <div id="roma" class="notranslate">
+            <span class="inputed"></span><span class="wanted">L</span><span class="remained">et's typing!</span>
+          </div>
+          <div id="hint" class="text-muted notranslate"></div>
+        </div>
+      </div>
+      <div id="keyboard" class="d-none simple-keyboard notranslate"></div>
+    </template>
     <script type="module" src="index.js"></script>
   </body>
 </html>
