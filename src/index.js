@@ -1,5 +1,5 @@
 import simpleKeyboard from "https://cdn.jsdelivr.net/npm/simple-keyboard@3.7.77/+esm";
-import { Collapse } from "https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/+esm";
+import { Collapse } from "https://cdn.jsdelivr.net/npm/bootstrap@5.3.6/+esm";
 
 document.getElementById("gamePanel")
   .appendChild(document.getElementById("gamePanelTemplate").content);
