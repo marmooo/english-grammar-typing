@@ -197,6 +197,10 @@ function createAudioContext() {
 }
 
 function unlockAudio() {
+  const uttr = new SpeechSynthesisUtterance("");
+  uttr.lang = "en-US";
+  speechSynthesis.speak(uttr);
+
   if (audioContext) {
     audioContext.resume();
   } else {
@@ -206,7 +210,7 @@ function unlockAudio() {
     loadAudio("correct", "mp3/correct.mp3");
     loadAudio("incorrect", "mp3/cat.mp3");
   }
-  document.removeEventListener("pointerdown", unlockAudio);
+  document.removeEventListener("click", unlockAudio);
   document.removeEventListener("keydown", unlockAudio);
 }
 
@@ -722,5 +726,5 @@ startButton.addEventListener("click", replay);
 document.getElementById("guideSwitch").onchange = toggleGuide;
 document.addEventListener("keyup", upKeyEvent);
 document.addEventListener("keydown", typeEvent);
-document.addEventListener("pointerdown", unlockAudio, { once: true });
+document.addEventListener("click", unlockAudio, { once: true });
 document.addEventListener("keydown", unlockAudio, { once: true });
