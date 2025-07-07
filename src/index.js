@@ -1,9 +1,6 @@
 import simpleKeyboard from "https://cdn.jsdelivr.net/npm/simple-keyboard@3.7.77/+esm";
 import { Collapse } from "https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/+esm";
 
-document.getElementById("gamePanel")
-  .appendChild(document.getElementById("gamePanelTemplate").content);
-
 const remSize = parseInt(getComputedStyle(document.documentElement).fontSize);
 const gamePanel = document.getElementById("gamePanel");
 const infoPanel = document.getElementById("infoPanel");
